@@ -1,0 +1,18 @@
+name: trilium-etapi
+version: 0.1.0
+description: Work with Trilium through its official REST ETAPI.
+author: Daniel-Robotic
+tags: [trilium, notes, etapi]
+provides_tools:
+  - trilium_etapi
+config_schema:
+  base_url:
+    type: str
+    default: "https://your-trilium-host.example"
+    label: Trilium base URL
+    description: Instance URL, without the /etapi suffix.
+  etapi_token:
+    type: secret
+    env: TRILIUM_ETAPI_TOKEN
+    label: ETAPI token
+    description: Token created in Trilium under Options → ETAPI.
