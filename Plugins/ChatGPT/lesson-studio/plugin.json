@@ -1,0 +1,16 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "lesson-studio",
+  "version": "0.1.0",
+  "description": "Prepare 90-minute AI and ML lesson plans and full teaching scripts with subject-specific skills.",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Lesson Studio",
+        "shortDescription": "Планы и подробные занятия по AI и ML",
+        "category": "Productivity",
+        "defaultPrompt": ["Составь план занятия по теме…", "Подготовь подробное занятие на 90 минут по теме…"]
+      }
+    }
+  }
+}

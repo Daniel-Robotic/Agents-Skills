@@ -1,0 +1,6 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "lesson-studio",
+  "version": "0.1.0",
+  "description": "Prepare 90-minute AI and ML lesson plans and full teaching scripts with subject-specific skills."
+}

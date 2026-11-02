@@ -1,3 +1,3 @@
 # ChatGPT plugins
 
-`trilium-etapi/` — локальный плагин Codex Desktop для работы с Trilium по REST ETAPI. Установка и настройка описаны в [его README](trilium-etapi/README.md).
+Здесь находятся [Trilium ETAPI](trilium-etapi/README.md) — локальное подключение к заметкам — и [Lesson Studio](lesson-studio/README.md) — пакет навыков для подготовки занятий. Инструкции по установке и настройке находятся внутри папки каждого плагина.
