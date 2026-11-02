@@ -119,7 +119,7 @@ def _call_etapi(ctx: Any, args: dict[str, Any]) -> str:
                 headers["Content-Type"] = "text/plain; charset=utf-8"
             else:
                 data = base64.b64decode(args[field], validate=True)
-                headers["Content-Type"] = "application/octet-stream"
+                headers["Content-Type"] = "application/zip" if operation_id == "importZip" else "application/octet-stream"
 
         request = Request(url, data=data, headers=headers, method=operation["method"])
         try:

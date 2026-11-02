@@ -1,3 +1,3 @@
 # ChatGPT plugins
 
-Пока здесь нет плагинов. Создавайте их через Plugin Creator в ChatGPT; исходники и сопутствующие материалы конкретного плагина размещайте в отдельной подпапке. Плагин ChatGPT может объединять навыки и подключенные приложения. См. [официальную справку OpenAI](https://help.openai.com/en/articles/20001256-plugins-in-chatgpt).
+`trilium-etapi/` — локальный плагин Codex Desktop для работы с Trilium по REST ETAPI. Установка и настройка описаны в [его README](trilium-etapi/README.md).

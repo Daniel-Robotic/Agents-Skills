@@ -1,57 +1,74 @@
 # Навыки и плагины для AI-агентов
 
-Здесь собраны навыки, плагины и текстовые промты для Hermes Agent и ChatGPT. Репозиторий можно клонировать целиком: нужные материалы подключаются отдельно в настройках каждой платформы.
+У каждого плагина своя папка и собственный `README.md` с настройками, которые нужны именно ему.
 
 ## Структура
 
-- `Skills/HermesAgent/` и `Skills/ChatGPT/` — навыки для соответствующих платформ.
-- `Plugins/HermesAgent/` и `Plugins/ChatGPT/` — плагины и файлы для подключения внешних сервисов.
-- `Prompts/` — обычные текстовые промты.
-- `Guides/` — заметки о создании и установке.
+```text
+Agents-Skills/
+├── Skills/
+│   ├── HermesAgent/
+│   └── ChatGPT/
+├── Plugins/
+│   ├── HermesAgent/
+│   │   └── <имя-плагина>/
+│   └── ChatGPT/
+│       └── <имя-плагина>/
+├── Prompts/
+└── Guides/
+```
 
-Сейчас в репозитории есть навыки `audit-ai-text` и `write-clear-text`, а также подключение к Trilium через ETAPI.
+`Skills/` содержит навыки, `Plugins/` — устанавливаемые плагины, `Prompts/` — текстовые промты, а `Guides/` — заметки о разработке. Плагины для разных платформ устанавливаются по-разному; инструкции ниже относятся к любому плагину в соответствующей папке.
 
-## Получить репозиторий
+## Скачать репозиторий
 
 ```bash
 git clone https://github.com/Daniel-Robotic/Agents-Skills.git
 cd Agents-Skills
 ```
 
-Чтобы обновить файлы позже, выполни `git pull` внутри папки репозитория.
+Чтобы получить новые версии файлов позже, выполните `git pull` в папке репозитория.
 
-## Навыки Hermes Agent
+## Установить плагин в Hermes Agent
 
-Добавь каталог навыков из клона в `~/.hermes/config.yaml`:
+Откройте `Plugins/HermesAgent/` и выберите папку нужного плагина. Скопируйте **папку целиком** в `~/.hermes/plugins/`, сохранив её имя. Например, для папки с именем `my-plugin` итоговый путь должен быть `~/.hermes/plugins/my-plugin/plugin.yaml`.
 
-```yaml
-skills:
-  external_dirs:
-    - /путь/к/Agents-Skills/Skills/HermesAgent
+**Windows PowerShell** — замените `my-plugin` на имя нужной папки:
+
+```powershell
+$pluginName = 'my-plugin'
+New-Item -ItemType Directory -Force "$HOME\.hermes\plugins\$pluginName" | Out-Null
+Copy-Item -Recurse -Force "Plugins\HermesAgent\$pluginName\*" "$HOME\.hermes\plugins\$pluginName"
+hermes plugins enable $pluginName
 ```
 
-На Windows укажи свой путь со слэшами, например `C:/Users/имя/Agents-Skills/Skills/HermesAgent`. Перезапусти или открой новую сессию Hermes. Навыки появятся в списке и вызываются по имени, например `/audit-ai-text`.
-
-Если Hermes должен работать с отдельной копией навыка, скопируй папку этого навыка в `~/.hermes/skills/`.
-
-## Навыки ChatGPT
-
-В ChatGPT открой раздел **Skills**, создай навык и загрузи его файлы из `Skills/ChatGPT/<имя-навыка>/`. Если загрузка требует ZIP, архивируй содержимое папки навыка, включая `SKILL.md` и нужные `references/`. Доступность Skills зависит от плана и настроек рабочего пространства.
-
-## Плагин Trilium в Hermes Agent
-
-Плагин находится в `Plugins/HermesAgent/trilium-etapi/` и напрямую вызывает официальный REST ETAPI Trilium.
-
-Скопируй папку `trilium-etapi` в `~/.hermes/plugins/`, затем включи плагин:
+**Linux и macOS** — замените `my-plugin` на имя нужной папки:
 
 ```bash
-hermes plugins enable trilium-etapi
+plugin_name='my-plugin'
+mkdir -p "$HOME/.hermes/plugins/$plugin_name"
+cp -R "Plugins/HermesAgent/$plugin_name/." "$HOME/.hermes/plugins/$plugin_name/"
+hermes plugins enable "$plugin_name"
 ```
 
-В настройках плагина укажи адрес Trilium (например `https://notes.example.com`) и ETAPI token, который создаётся в **Trilium → Options → ETAPI**. Адрес указывается без `/etapi`. Включи HTTPS для публичного сервера. После обновления репозитория скопируй папку плагина заново.
+После включения настройте плагин по его собственному `README.md` и начните новую сессию Hermes. Если у плагина есть ключи доступа, храните их в секретах или переменных окружения, как указано в его инструкции.
 
-Плагин поддерживает операции официального ETAPI, включая поиск и изменение заметок, ветки дерева, вложения, атрибуты, историю и ревизии, календарные заметки, импорт/экспорт, метрики и резервные копии. Бинарные данные передаются через Base64 внутри вызова инструмента.
+Когда обновите репозиторий, повторите копирование файлов нужного плагина. Поскольку плагины лежат во вложенных папках общего репозитория, команда `hermes plugins install Daniel-Robotic/Agents-Skills` не устанавливает их по отдельности.
 
-## Промты и другие материалы
+## Установить плагин в Codex Desktop
 
-Файлы в `Prompts/` — это обычный текст: скопируй подходящий промт в нужный чат. Перед созданием или изменением навыков и плагинов смотри инструкции в `Guides/`.
+Плагины Codex из этого репозитория перечислены в `.agents/plugins/marketplace.json`. Добавьте репозиторий как источник плагинов:
+
+```bash
+codex plugin marketplace add Daniel-Robotic/Agents-Skills
+```
+
+Перезапустите Codex Desktop, откройте каталог **Plugins** и выберите источник **Agents Skills**. Найдите нужный плагин и установите его. Затем откройте `Plugins/ChatGPT/<имя-плагина>/README.md`: там указаны необходимые программы, настройки и способ первого запуска.
+
+Для плагинов из другого GitHub-репозитория используется та же команда с его адресом: `codex plugin marketplace add владелец/репозиторий`. В репозитории должен быть каталог плагинов, который понимает Codex.
+
+Чтобы получить обновления источника, выполните `codex plugin marketplace upgrade`, затем обновите установленный плагин в Codex, если приложение предложит это сделать.
+
+## Где искать настройки и помощь
+
+Начните с `README.md` внутри папки выбранного плагина. Там описаны его зависимости, адреса сервисов, ключи доступа и примеры использования. Общие правила создания плагинов находятся в `Guides/`; краткий список доступных плагинов — в [Plugins/README.md](Plugins/README.md).
